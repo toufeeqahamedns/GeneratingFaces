@@ -1,6 +1,8 @@
 """ Module defining the text encoder used for conditioning the generation of the GAN """
 
 import torch as th
+from functools import partial
+import pickle
 
 
 class Encoder(th.nn.Module):
@@ -79,7 +81,9 @@ class PretrainedEncoder(th.nn.Module):
             'dpout_model': 0.0, 'version': 2}).to(device)
 
         # load the model and embeddings into the model:
-        self.encoder.load_state_dict(th.load(model_file))
+        pickle.load = partial(pickle.load, encoding="latin1")
+        pickle.Unpickler = partial(pickle.Unpickler, encoding="latin1")
+        self.encoder.load_state_dict(th.load(model_file, map_location=lambda storage, loc: storage, pickle_module=pickle))
 
         # load the vocabulary file and build the vocabulary
         self.encoder.set_w2v_path(embedding_file)
