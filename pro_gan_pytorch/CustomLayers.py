@@ -94,30 +94,32 @@ class _equalized_deconv2d(th.nn.Module):
 
 
 class _equalized_linear(th.nn.Module):
-    """ Linear layer using equalized learning rate """
+    """ Linear layer using equalized learning rate
+        Args:
+            :param c_in: number of input channels
+            :param c_out: number of output channels
+            :param bias: whether to use bias with the linear layer
+    """
 
-    def __init__(self, c_in, c_out, initializer='kaiming', bias=True):
+    def __init__(self, c_in, c_out, bias=True):
         """
-        Linear layer from pytorch extended to include equalized learning rate
-        :param c_in: number of input channels
-        :param c_out: number of output channels
-        :param initializer: initializer to be used: one of "kaiming" or "xavier"
-        :param bias: whether to use bias with the linear layer
+        Linear layer modified for equalized learning rate
         """
+        from numpy import sqrt
+
         super(_equalized_linear, self).__init__()
-        self.linear = th.nn.Linear(c_in, c_out, bias=False)
-        if initializer == 'kaiming':
-            th.nn.init.kaiming_normal_(self.linear.weight,
-                                       a=th.nn.init.calculate_gain('linear'))
-        elif initializer == 'xavier':
-            th.nn.init.xavier_normal_(self.linear.weight)
+
+        self.weight = th.nn.Parameter(th.nn.init.normal_(
+            th.empty(c_out, c_in)
+        ))
 
         self.use_bias = bias
 
         if self.use_bias:
             self.bias = th.nn.Parameter(th.FloatTensor(c_out).fill_(0))
-        self.scale = (th.mean(self.linear.weight.data ** 2)) ** 0.5
-        self.linear.weight.data.copy_(self.linear.weight.data / self.scale)
+
+        fan_in = c_in
+        self.scale = sqrt(2) / sqrt(fan_in)
 
     def forward(self, x):
         """
@@ -125,14 +127,9 @@ class _equalized_linear(th.nn.Module):
         :param x: input
         :return: y => output
         """
-        try:
-            dev_scale = self.scale.to(x.get_device())
-        except RuntimeError:
-            dev_scale = self.scale
-        x = self.linear(x.mul(dev_scale))
-        if self.use_bias:
-            return x + self.bias.expand_as(x)
-        return x
+        from torch.nn.functional import linear
+        return linear(x, self.weight * self.scale,
+                      self.bias if self.use_bias else None)
 
 
 # ----------------------------------------------------------------------------
