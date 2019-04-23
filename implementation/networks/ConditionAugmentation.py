@@ -47,7 +47,7 @@ class ConditionAugmentor(th.nn.Module):
 
         # use the reparameterization trick
         mid_point = self.latent_size
-        mus, sigmas = combined[:, :mid_point], combined[:, mid_point:]
+        mus, sigmas = combined[:mid_point], combined[mid_point:]
 
         # mus don't need to be transformed, but sigmas cannot be negative.
         # so, we'll apply a ReLU on top of sigmas
