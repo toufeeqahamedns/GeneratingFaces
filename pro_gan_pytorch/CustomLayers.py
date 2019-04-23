@@ -131,7 +131,7 @@ class _equalized_linear(th.nn.Module):
             dev_scale = self.scale
         x = self.linear(x.mul(dev_scale))
         if self.use_bias:
-            return x + self.bias.view(1, -1).expand_as(x)
+            return x + self.bias.expand_as(x)
         return x
 
 
