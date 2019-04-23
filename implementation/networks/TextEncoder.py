@@ -99,4 +99,4 @@ class PretrainedEncoder(th.nn.Module):
         """
 
         # we just need the encodings here
-        return self.encoder.encode(x, tokenize=False)[0]
+        return self.encoder.encode(x, tokenize=False)
