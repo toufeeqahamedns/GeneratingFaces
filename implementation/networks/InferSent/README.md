@@ -28,7 +28,7 @@ mkdir dataset/GloVe
 curl -Lo dataset/GloVe/glove.840B.300d.zip http://nlp.stanford.edu/data/glove.840B.300d.zip
 unzip dataset/GloVe/glove.840B.300d.zip -d dataset/GloVe/
 mkdir dataset/fastText
-curl -Lo dataset/fastText/crawl-300d-2M.vec.zip https://s3-us-west-1.amazonaws.com/fasttext-vectors/crawl-300d-2M.vec.zip
+curl -Lo dataset/fastText/crawl-300d-2M.vec.zip https://dl.fbaipublicfiles.com/fasttext/vectors-english/crawl-300d-2M-subword.zip
 unzip dataset/fastText/crawl-300d-2M.vec.zip -d dataset/fastText/
 ```
 
@@ -38,8 +38,8 @@ for a practical example.** Get started with the following steps:
 
 *0.0) Download our InferSent models (V1 trained with GloVe, V2 trained with fastText)[147MB]:*
 ```bash
-curl -Lo encoder/infersent1.pkl https://s3.amazonaws.com/senteval/infersent/infersent1.pkl
-curl -Lo encoder/infersent2.pkl https://s3.amazonaws.com/senteval/infersent/infersent2.pkl
+curl -Lo encoder/infersent1.pickle https://dl.fbaipublicfiles.com/infersent/infersent1.pkl
+curl -Lo encoder/infersent2.pickle https://dl.fbaipublicfiles.com/infersent/infersent2.pkl
 ```
 Note that infersent1 is trained with GloVe (which have been trained on text preprocessed with the PTB tokenizer) and infersent2 is trained with fastText (which have been trained on text preprocessed with the MOSES tokenizer). The latter also removes the padding of zeros with max-pooling which was inconvenient when embedding sentences outside of their batches.
 
@@ -85,13 +85,13 @@ We provide a function to visualize the importance of each word in the encoding o
 ```python
 infersent.visualize('A man plays an instrument.', tokenize=True)
 ```
-![Model](https://s3.amazonaws.com/senteval/infersent/visualization.png)
+![Model](https://dl.fbaipublicfiles.com/infersent/visualization.png)
 
 
 ## Train model on Natural Language Inference (SNLI)
-To reproduce our results on [SNLI](https://nlp.stanford.edu/projects/snli/), set **W2V_PATH** in *train_nli.py*, then run:
+To reproduce our results on [SNLI](https://nlp.stanford.edu/projects/snli/), run:
 ```bash
-python train_nli.py
+python train_nli.py --word_emb_path '<path to word embeddings>'
 ```
 You should obtain a dev accuracy of 85 and a test accuracy of **[84.5](https://nlp.stanford.edu/projects/snli/)** with the default setting.
 
