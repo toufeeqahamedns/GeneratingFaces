@@ -1,4 +1,8 @@
+# Update 23.04.2019:
+
+Updated from <a href="https://github.com/akanimax/T2F">original work by @akanimax</a>, I updated PyTorch version, pro_gan_pytorch and Infersent to be consistent, and was able to reproduce training in Google Colaboratory (see .ipynb file). Although generator has learned to generate valid faces, it doesn't seem to show any significant relevance to the text input.
 # T2F
+
 Text-to-Face generation using Deep Learning. This project combines two of the recent architectures <a href="https://arxiv.org/abs/1710.10916"> StackGAN </a> and <a href="https://arxiv.org/abs/1710.10196"> ProGAN </a> for synthesizing faces from textual descriptions.<br>
 The project uses <a href="https://arxiv.org/abs/1803.03827"> Face2Text </a> dataset which contains 400 facial images and textual captions for each of them. The data can be obtained by contacting either the **RIVAL** group or the authors of the aforementioned paper.
 
