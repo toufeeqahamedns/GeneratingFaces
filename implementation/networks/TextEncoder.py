@@ -72,7 +72,7 @@ class PretrainedEncoder(th.nn.Module):
         """
         from networks.InferSent.models import InferSent
 
-        super().__init__()
+        super(PretrainedEncoder, self).__init__()
 
         # this is fixed
         self.encoder = InferSent({
