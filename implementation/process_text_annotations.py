@@ -30,7 +30,7 @@ def main(args):
     :param args: parsed command line arguments
     :return: None
     """
-    import data_processing.TextExtractor as te
+    import implementation.data_processing.TextExtractor as te
 
     # read the annotations:
     images, descs = te.read_annotations(args.json_annot_file)

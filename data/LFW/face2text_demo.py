@@ -7,7 +7,7 @@ import cv2
 import os
 
 
-descriptions_file = "Face2Text/face2text_v0.1/clean.json"
+descriptions_file = "/home/toufeeq/CollegeProject/T2F/data/face2text_v0.1/clean.json"
 
 # load the json data:
 with open(descriptions_file, "r") as j_desc:
