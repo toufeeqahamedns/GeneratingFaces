@@ -108,3 +108,7 @@ venv.bak/
 
 # ignore blog material
 blog_material/
+
+glove*
+lfw*
+training_r*

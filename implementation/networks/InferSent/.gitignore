@@ -20,3 +20,5 @@ dataset/MultiNLI/
 dataset/AllNLI/
 dataset/GloVe
 dataset/fastText
+
+models

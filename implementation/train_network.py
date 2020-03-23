@@ -3,7 +3,7 @@ import datetime
 import time
 import torch as th
 import numpy as np
-import data_processing.DataLoader as dl
+import implementation.data_processing.DataLoader as dl
 import argparse
 import yaml
 import os
@@ -28,7 +28,7 @@ def parse_arguments():
     :return: args => parsed command line arguments
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", action="store", type=str, default="configs/1.conf",
+    parser.add_argument("--config", action="store", type=str, default="~/CollegeProject/implementation/configs/2_colab.conf",
                         help="default configuration for the Network")
     parser.add_argument("--start_depth", action="store", type=int, default=0,
                         help="Starting depth for training the network")
@@ -116,7 +116,7 @@ def train_networks(encoder, ca, c_pro_gan, dataset, epochs,
                    log_dir, sample_dir, checkpoint_factor,
                    save_dir, use_matching_aware_dis=True):
     # required only for type checking
-    from networks.TextEncoder import PretrainedEncoder
+    from implementation.networks.TextEncoder import PretrainedEncoder
 
     # input assertions
     assert c_pro_gan.depth == len(batch_sizes), "batch_sizes not compatible with depth"
@@ -302,8 +302,8 @@ def main(args):
     :return: None
     """
 
-    from networks.TextEncoder import Encoder
-    from networks.ConditionAugmentation import ConditionAugmentor
+    from implementation.networks.TextEncoder import Encoder
+    from implementation.networks.ConditionAugmentation import ConditionAugmentor
     from pro_gan_pytorch.PRO_GAN import ConditionalProGAN
 
     print(args.config)
@@ -317,7 +317,7 @@ def main(args):
             img_dir=config.images_dir,
             img_transform=dl.get_transform(config.img_dims)
         )
-        from networks.TextEncoder import PretrainedEncoder
+        from implementation.networks.TextEncoder import PretrainedEncoder
         # create a new session object for the pretrained encoder:
         text_encoder = PretrainedEncoder(
             model_file=config.pretrained_encoder_file,
