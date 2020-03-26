@@ -15,7 +15,7 @@ class Face2TextDataset(Dataset):
         private helper for loading the data
         :return: data => dict of data objs
         """
-        from implementation.data_processing.TextExtractor import load_pickle
+        from data_processing.TextExtractor import load_pickle
         data = load_pickle(self.pickle_file_path)
 
         return data
@@ -101,7 +101,7 @@ class RawTextFace2TextDataset(Dataset):
         private helper for loading the annotations and file names from the annotations file
         :return: images, descs => images and descriptions
         """
-        from implementation.data_processing.TextExtractor import read_annotations, basic_preprocess
+        from data_processing.TextExtractor import read_annotations, basic_preprocess
         images, descs = read_annotations(self.annots_file_path)
         # preprocess the descriptions:
         descs = basic_preprocess(descs)
