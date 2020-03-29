@@ -13,11 +13,11 @@ def parse_arguments():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--json_annot_file", action="store", type=str,
-                        default="../data/LFW/Face2Text/face2text_v0.1/clean.json",
+                        default="../data/face2text_v1.0/raw.json",
                         help="path to the json annotations file (Face2Text data)")
 
     parser.add_argument("--out_file", action="store", type=str,
-                        default="processed_annotations/processed_text.pkl",
+                        default="processed_annotations/processed_text_celeba.pkl",
                         help="path to store the output pickle file")
 
     args = parser.parse_args()
@@ -30,7 +30,7 @@ def main(args):
     :param args: parsed command line arguments
     :return: None
     """
-    import implementation.data_processing.TextExtractor as te
+    import data_processing.TextExtractor as te
 
     # read the annotations:
     images, descs = te.read_annotations(args.json_annot_file)
