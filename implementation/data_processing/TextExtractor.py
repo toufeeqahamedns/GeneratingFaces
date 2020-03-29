@@ -17,14 +17,18 @@ def read_annotations(file_path):
     images, descriptions = [], []  # initialize to empty lists
     # convert all the file's extensions to .jpg
     for anno in annos:
-        name, _ = anno['image'].split('.')
+        name, _ = anno['filename'].split('.')
         new_name = name + '.jpg'
-        anno['image'] = new_name
+        anno['filename'] = new_name
 
+        images.append(anno['filename'])
+        descriptions.append(anno['description'])
+
+        # This was for clean.json v0.1
         # extract only the image_id and the descriptions in a list
-        for desc in anno['descriptions']:
-            images.append(anno['image'])
-            descriptions.append(desc['text'].lower())
+        # for desc in anno['descriptions']:
+        #     images.append(anno['image'])
+        #     descriptions.append(desc['text'].lower())
 
     # check if their lengths match:
     assert len(images) == len(descriptions), "something messed up while reading data ..."
