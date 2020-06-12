@@ -156,9 +156,21 @@ class CondWGAN_GP(ConditionalGANLoss):
         # generate random epsilon
         epsilon = th.rand((batch_size, 1, 1, 1)).to(self.device)
 
+        # print("INSIDE GRADIENT PENALTY")
+        # print("epsilon========================================================")
+        # print(epsilon)
+        # print("real_samps+++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        # print(real_samps)
+        # print("fake_samps-----------------------------------------------------")
+        # print(fake_samps)
+
         # create the merge of both real and fake samples
         merged = (epsilon * real_samps) + ((1 - epsilon) * fake_samps)
 
+
+        print("WE will we will we will")
+        print(batch_size)
+        print(len(merged))
         # forward pass
         op = self.dis.forward(merged, latent_vector, height, alpha)
 

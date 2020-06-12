@@ -3,7 +3,7 @@ import datetime
 import time
 import torch as th
 import numpy as np
-import implementation.data_processing.DataLoader as dl
+import data_processing.DataLoader as dl
 import argparse
 import yaml
 import os
@@ -28,7 +28,7 @@ def parse_arguments():
     :return: args => parsed command line arguments
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", action="store", type=str, default="~/CollegeProject/implementation/configs/2_colab.conf",
+    parser.add_argument("--config", action="store", type=str, default="/content/T2F/implementation/configs/colab.conf",
                         help="default configuration for the Network")
     parser.add_argument("--start_depth", action="store", type=int, default=0,
                         help="Starting depth for training the network")
@@ -116,7 +116,7 @@ def train_networks(encoder, ca, c_pro_gan, dataset, epochs,
                    log_dir, sample_dir, checkpoint_factor,
                    save_dir, use_matching_aware_dis=True):
     # required only for type checking
-    from implementation.networks.TextEncoder import PretrainedEncoder
+    from networks.TextEncoder import PretrainedEncoder
 
     # input assertions
     assert c_pro_gan.depth == len(batch_sizes), "batch_sizes not compatible with depth"
@@ -143,9 +143,8 @@ def train_networks(encoder, ca, c_pro_gan, dataset, epochs,
 
     fixed_noise = th.randn(len(fixed_captions),
                            c_pro_gan.latent_size - fixed_c_not_hats.shape[-1]).to(device)
-
     fixed_gan_input = th.cat((fixed_c_not_hats, fixed_noise), dim=-1)
-
+    
     # save the fixed_images once:
     fixed_save_dir = os.path.join(sample_dir, "__Real_Info")
     os.makedirs(fixed_save_dir, exist_ok=True)
@@ -185,7 +184,6 @@ def train_networks(encoder, ca, c_pro_gan, dataset, epochs,
 
                 # extract current batch of data for training
                 captions, images = batch
-
                 if encoder_optim is not None:
                     captions = captions.to(device)
 
@@ -302,8 +300,8 @@ def main(args):
     :return: None
     """
 
-    from implementation.networks.TextEncoder import Encoder
-    from implementation.networks.ConditionAugmentation import ConditionAugmentor
+    from networks.TextEncoder import Encoder
+    from networks.ConditionAugmentation import ConditionAugmentor
     from pro_gan_pytorch.PRO_GAN import ConditionalProGAN
 
     print(args.config)
@@ -317,7 +315,7 @@ def main(args):
             img_dir=config.images_dir,
             img_transform=dl.get_transform(config.img_dims)
         )
-        from implementation.networks.TextEncoder import PretrainedEncoder
+        from networks.TextEncoder import PretrainedEncoder
         # create a new session object for the pretrained encoder:
         text_encoder = PretrainedEncoder(
             model_file=config.pretrained_encoder_file,
