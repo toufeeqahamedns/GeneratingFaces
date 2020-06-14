@@ -167,10 +167,6 @@ class CondWGAN_GP(ConditionalGANLoss):
         # create the merge of both real and fake samples
         merged = (epsilon * real_samps) + ((1 - epsilon) * fake_samps)
 
-
-        print("WE will we will we will")
-        print(batch_size)
-        print(len(merged))
         # forward pass
         op = self.dis.forward(merged, latent_vector, height, alpha)
 
