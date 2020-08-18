@@ -31,7 +31,7 @@ def get_config(conf_file):
     # convert the data into an easyDictionary
     return edict(data)
 
-config = get_config("/home/toufeeq/CollegeProject/T2F/implementation/configs/2_colab.conf")
+config = get_config("/home/toufeeq/CollegeProject/GeneratingFaces/implementation/configs/2_colab.conf")
 
 c_pro_gan = ProGAN(
     # embedding_size=config.hidden_size,
@@ -46,7 +46,7 @@ c_pro_gan = ProGAN(
     device=device
 )
 
-ganmodel = th.load("/home/toufeeq/CollegeProject/T2F/training_runs/2/saved_models/GAN_GEN_4.pth")
+ganmodel = th.load("/home/toufeeq/CollegeProject/GeneratingFaces/training_runs/2/saved_models/GAN_GEN_4.pth")
 
 state_dict =ganmodel['state_dict']
 from collections import OrderedDict
@@ -81,11 +81,11 @@ dataset = dl.Face2TextDataset(
 #         num_layers=config.num_layers,
 #         device=device
 #     )
-# text_encoder.load_state_dict(th.load("/home/toufeeq/CollegeProject/T2F/training_runs\\11\\saved_models\\Encoder_3_20.pth"))
+# text_encoder.load_state_dict(th.load("/home/toufeeq/CollegeProject/GeneratingFaces/training_runs\\11\\saved_models\\Encoder_3_20.pth"))
 
 text_encoder = PretrainedEncoder(
-    model_file='/home/toufeeq/CollegeProject/T2F/implementation/networks/InferSent/models/infersent2.pkl',
-    embedding_file='/home/toufeeq/CollegeProject/T2F/implementation/networks/InferSent/models/glove.840B.300d.txt',
+    model_file='/home/toufeeq/CollegeProject/GeneratingFaces/implementation/networks/InferSent/models/infersent2.pkl',
+    embedding_file='/home/toufeeq/CollegeProject/GeneratingFaces/implementation/networks/InferSent/models/glove.840B.300d.txt',
     device='cuda'
 )
 
@@ -94,7 +94,7 @@ condition_augmenter = ConditionAugmentor(
         latent_size=config.ca_out_size,
         device=device
     )
-condition_augmenter.load_state_dict(th.load("/home/toufeeq/CollegeProject/T2F/training_runs/2/saved_models/Condition_Augmentor_4.pth"))
+condition_augmenter.load_state_dict(th.load("/home/toufeeq/CollegeProject/GeneratingFaces/training_runs/2/saved_models/Condition_Augmentor_4.pth"))
 
 
 
