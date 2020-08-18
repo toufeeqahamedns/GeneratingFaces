@@ -27,7 +27,7 @@ def get_config(conf_file):
     # convert the data into an easyDictionary
     return edict(data)
 
-config = get_config("/home/toufeeq/CollegeProject/T2F/implementation/configs/2_colab.conf")
+config = get_config("/home/toufeeq/CollegeProject/GeneratingFaces/implementation/configs/2_colab.conf")
 
 
 def create_grid(samples, scale_factor, img_file, real_imgs=False):
@@ -65,8 +65,8 @@ dataset = dl.Face2TextDataset(
 from networks.TextEncoder import PretrainedEncoder
 # create a new session object for the pretrained encoder:
 text_encoder = PretrainedEncoder(
-    model_file='/home/toufeeq/CollegeProject/T2F/implementation/networks/InferSent/models/infersent2.pkl',
-    embedding_file='/home/toufeeq/CollegeProject/T2F/implementation/networks/InferSent/models/glove.840B.300d.txt',
+    model_file='/home/toufeeq/CollegeProject/GeneratingFaces/implementation/networks/InferSent/models/infersent2.pkl',
+    embedding_file='/home/toufeeq/CollegeProject/GeneratingFaces/implementation/networks/InferSent/models/glove.840B.300d.txt',
     device='cuda'
 )
 condition_augmenter = ConditionAugmentor(
@@ -76,7 +76,7 @@ condition_augmenter = ConditionAugmentor(
     device=device
 )
 
-ca_file = "/home/toufeeq/CollegeProject/T2F/training_runs/2/saved_models/Condition_Augmentor_4.pth"
+ca_file = "/home/toufeeq/CollegeProject/GeneratingFaces/training_runs/2/saved_models/Condition_Augmentor_4.pth"
 
 print("Loading conditioning augmenter from:", ca_file)
 condition_augmenter.load_state_dict(th.load(ca_file))
@@ -99,7 +99,7 @@ c_pro_gan = ConditionalProGAN(
     device=device
 )
 
-generator_file = "/home/toufeeq/CollegeProject/T2F/training_runs/2/saved_models/GAN_GEN_4.pth"
+generator_file = "/home/toufeeq/CollegeProject/GeneratingFaces/training_runs/2/saved_models/GAN_GEN_4.pth"
 print("Loading generator from:", generator_file)
 c_pro_gan.gen.load_state_dict(th.load(generator_file))
 

@@ -1,4 +1,4 @@
-""" Script for end-to-end training of the T2F model """
+""" Script for end-to-end training of the GeneratingFaces model """
 import datetime
 import time
 import torch as th
@@ -28,7 +28,7 @@ def parse_arguments():
     :return: args => parsed command line arguments
     """
     parser = argparse.ArgumentParser()
-    parser.add_argument("--config", action="store", type=str, default="/content/T2F/implementation/configs/colab.conf",
+    parser.add_argument("--config", action="store", type=str, default="/content/GeneratingFaces/implementation/configs/2_colab.conf",
                         help="default configuration for the Network")
     parser.add_argument("--start_depth", action="store", type=int, default=0,
                         help="Starting depth for training the network")
