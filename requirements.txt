@@ -1,4 +1,4 @@
-tensorflow==2.5.1
+tensorflow==2.5.3
 Pillow==8.3.2
 easydict==1.7
 torchvision==0.2.1
